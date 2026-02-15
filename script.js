@@ -31,9 +31,33 @@ document.getElementById("toggleFilter").onclick = () => {
     }
 };
 
+// 🔥 الدالة الجديدة — تقبل كل أنواع روابط يوتيوب
 function extractVideoID(url) {
-    const match = url.match(/v=([^&]+)/);
-    return match ? match[1] : null;
+    try {
+        // روابط youtu.be
+        if (url.includes("youtu.be/")) {
+            return url.split("youtu.be/")[1].split("?")[0];
+        }
+
+        // روابط watch?v=
+        if (url.includes("watch?v=")) {
+            return url.split("watch?v=")[1].split("&")[0];
+        }
+
+        // روابط shorts
+        if (url.includes("shorts/")) {
+            return url.split("shorts/")[1].split("?")[0];
+        }
+
+        // روابط embed
+        if (url.includes("embed/")) {
+            return url.split("embed/")[1].split("?")[0];
+        }
+
+        return null;
+    } catch {
+        return null;
+    }
 }
 
 function setupAudioFilter() {
